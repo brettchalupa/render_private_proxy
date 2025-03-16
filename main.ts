@@ -10,6 +10,12 @@ if (!targetUrl) {
 const target = new URL(targetUrl);
 
 async function handler(req: Request): Promise<Response> {
+  const url = new URL(req.url);
+
+  if (url.pathname === "/up") {
+    return new Response("OK", { status: 200 });
+  }
+
   if (targetUsername && targetPassword) {
     const authHeader = req.headers.get("Authorization");
     if (!authHeader) {
@@ -45,8 +51,6 @@ async function handler(req: Request): Promise<Response> {
   }
 
   try {
-    const url = new URL(req.url);
-
     const targetPath = url.pathname + url.search;
 
     const targetRequestUrl = new URL(targetPath, target);
