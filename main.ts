@@ -25,7 +25,9 @@ async function handler(req: Request): Promise<Response> {
       headers.set("Authorization", `Basic ${basicAuth}`);
     }
 
-    const targetRequest = new Request(targetRequestUrl.toString(), {
+    const targetStr = targetRequestUrl.toString();
+    console.log(`Proxying request to: ${targetStr}`);
+    const targetRequest = new Request(targetStr, {
       method: req.method,
       headers: headers,
       body: req.body,
@@ -35,6 +37,8 @@ async function handler(req: Request): Promise<Response> {
     const targetResponse = await fetch(targetRequest);
 
     const responseHeaders = new Headers(targetResponse.headers);
+
+    console.info(`Status response: ${targetResponse.status}`);
 
     // Remove hop-by-hop headers
     responseHeaders.delete("connection");
@@ -57,5 +61,6 @@ async function handler(req: Request): Promise<Response> {
   }
 }
 
-console.log("Proxy server listening on http://localhost:8000");
-Deno.serve(handler, { port: 8000 });
+const port = Deno.env.get("PORT") || 8000;
+console.log(`Proxy server listening on http://localhost:${port}`);
+Deno.serve(handler, { port });
