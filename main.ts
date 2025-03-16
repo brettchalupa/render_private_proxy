@@ -101,4 +101,4 @@ async function handler(req: Request): Promise<Response> {
 
 const port = Deno.env.get("PORT") || 8000;
 console.log(`Proxy server listening on http://localhost:${port}`);
-Deno.serve(handler, { port });
+Deno.serve({ port }, handler);
