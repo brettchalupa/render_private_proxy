@@ -10,6 +10,40 @@ if (!targetUrl) {
 const target = new URL(targetUrl);
 
 async function handler(req: Request): Promise<Response> {
+  if (targetUsername && targetPassword) {
+    const authHeader = req.headers.get("Authorization");
+    if (!authHeader) {
+      return new Response("Unauthorized", {
+        status: 401,
+        headers: { "WWW-Authenticate": 'Basic realm="Proxy"' },
+      });
+    }
+
+    const [authType, authString] = authHeader.split(" ");
+    if (authType !== "Basic") {
+      return new Response("Unauthorized", {
+        status: 401,
+        headers: { "WWW-Authenticate": 'Basic realm="Proxy"' },
+      });
+    }
+
+    try {
+      const [username, password] = atob(authString).split(":");
+      if (username !== targetUsername || password !== targetPassword) {
+        return new Response("Unauthorized", {
+          status: 401,
+          headers: { "WWW-Authenticate": 'Basic realm="Proxy"' },
+        });
+      }
+    } catch (error) {
+      console.error("Basic Auth Error:", error);
+      return new Response("Unauthorized", {
+        status: 401,
+        headers: { "WWW-Authenticate": 'Basic realm="Proxy"' },
+      });
+    }
+  }
+
   try {
     const url = new URL(req.url);
 
