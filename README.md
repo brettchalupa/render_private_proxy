@@ -2,6 +2,10 @@
 
 Simple Render service to proxy web requests to a private Render service.
 
+Built specifically for accessing the Faktory web UI when running it as a
+private service on Render: https://github.com/contribsys/faktory-render but can
+be used for any private service responding to HTTP requests on Render.
+
 Built with TypeScript and Deno.
 
 ## Configuring
