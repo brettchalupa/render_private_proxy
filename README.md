@@ -19,8 +19,9 @@ If the web service requires basic auth, confiure `TARGET_USERNAME` and
 ## Deploying
 
 1. Create a new Render Web Service
-2. Enter this URL: https://github.com/brettchalupa/render_private_proxy
+2. Select from public repo & enter this URL: https://github.com/brettchalupa/render_private_proxy
 
 ## Developing
 
-Run `deno task dev` to boot up the server locally.
+1. Install Deno 2+
+2. Run `deno task dev` to boot up the server locally in watch mode
