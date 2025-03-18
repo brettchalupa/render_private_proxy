@@ -20,6 +20,7 @@ If the web service requires basic auth, confiure `TARGET_USERNAME` and
 
 1. Create a new Render Web Service
 2. Select from public repo & enter this URL: https://github.com/brettchalupa/render_private_proxy
+3. Optionally configure `/up` to be the health check endpoint
 
 ## Developing
 
